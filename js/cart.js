@@ -6,6 +6,7 @@ const tbody = document.querySelector('tbody');
 const totalValueTd = document.getElementById("totalVal")
 //function to check if the cart is empty
 function checkCart() {
+    console.log("checking")
     qtySpanHandler()
     const cartItems = JSON.parse(localStorage.getItem("cartItems")) || []
     if (cartItems.length === 0 && tbody.parentElement) {
@@ -46,8 +47,10 @@ function qtySpanHandler() {
 }
 // function to visualize cart items 
 function drawTable() {
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || []
+    console.log("drawing table")
     tbody.innerHTML = ""
+    const cartItems = JSON.parse(localStorage.getItem("cartItems"))
+    console.log(cartItems)
     cartItems.forEach((item) => {
         tbody.innerHTML += `<tr data-key="${item.id}" class="cart-item-row">
                         <td class="item-img">
@@ -67,7 +70,8 @@ function drawTable() {
     })
     addingButtonsHandlers()
     activatingDeleteBtns()
-    checkCart()
+    calculatingTotalValue()
+    //checkCart()
 }
 drawTable()
 // function to refine cart items from zero qty items 
@@ -93,7 +97,7 @@ function addingButtonsHandlers() {
         btn.parentElement.parentElement.children[4].innerHTML = `$${targetItem.quantity * targetItem.price}`
         calculatingTotalValue()
     }))
-    decrementButtons.forEach((btn, i) => btn.addEventListener("click", () => {
+    decrementButtons.forEach((btn) => btn.addEventListener("click", () => {
         const qtySpan = btn.parentElement.children[1];
         const itemId = parseInt(btn.dataset.key);
         changeQty(itemId, "decrement")
@@ -103,7 +107,6 @@ function addingButtonsHandlers() {
         btn.parentElement.parentElement.children[4].innerHTML = `$${targetItem.quantity * targetItem.price}`
         refineCart()
         calculatingTotalValue()
-
     }))
 }
 
@@ -164,12 +167,12 @@ if (favsItems.length === 0) {
 }
 else {
     favCont.style.diplay = "block"
-    favsItems.forEach((item, i) => favCont.innerHTML += `<div class="product-card">
+    favsItems.forEach((item, i) => favCont.innerHTML += `<div class="product-card" data-key="${item.id}">
     <img class="product-image" src="${item.image}" alt="Product Image">
     <div class="product-name">${item.name}</div>
     <div class="product-price">$${parseInt(item.price)}</div>
-    <button class="btn" onclick="addToCart(${item.id},${i})"><i class="fas fa-shopping-cart"></i></button>
-    <button class="btn" onclick="removeItem(${item.id},${i})"><i class="fa-solid fa-trash-can"></i></button>
+    <button class="btn" onclick="addToCart(${item.id})"><i class="fas fa-shopping-cart"></i></button>
+    <button class="btn" onclick="removeItem(${item.id})"><i class="fa-solid fa-trash-can"></i></button>
 </div>`)
 }
 // fav buttons slider functions 
@@ -191,57 +194,61 @@ function prevSlide() {
     console.log(slideValue)
 }
 // delete button hundler 
-const favCards = document.querySelectorAll(".favs .product-card")
-function removeItem(id, i) {
+function removeItem(id) {
+    let favCards = document.querySelectorAll(".favs .product-card")
+    let favsItems = JSON.parse(localStorage.getItem("favs")) || []
     favsItems = favsItems.filter(fav => fav.id !== id)
-    favCards[i].remove()
     localStorage.setItem("favs", JSON.stringify(favsItems))
+    favCards.forEach(card => {
+        if (parseInt(card.dataset.key) === id) {
+            card.remove()
+        }
+    })
     if (favsItems.length === 0) {
         favCont.parentElement.style.display = "none"
     }
 }
 //add to cart handler
-function addToCart(id, i) {
+function addToCart(id) {
     const cartItems = JSON.parse(localStorage.getItem("cartItems")) || []
     const favedKit = favsItems.filter(kit => kit.id === id)[0]
-    console.log(favedKit)
-    if (cartItems.length === 0) {
-        tbody.innerHTML = `<tr class="cart-item-row">
-            <td class="item-img">
-            <button class="del-btn"><i class="fa-solid fa-trash-can"></i></button>
-                <img src="${favedKit.image}" alt="${favedKit.name}">
-            </td>
-            <td>${favedKit.name}</td>
-            <td>$${parseInt(favedKit.price)}</td>
-            <td class="item-qty">
-                <button class="decrement-btn">-</button>
-                <span>1</span>
-                <button class="increment-btn">+</button>
-            </td>
-            <td class="item-totPrice">$${parseInt(favedKit.price)}</td>
-        </tr>`
-    }
-    else {
-        tbody.innerHTML += `<tr class="cart-item-row">
-            <td class="item-img">
-            <button class="del-btn"><i class="fa-solid fa-trash-can"></i></button>
-                <img src="${favedKit.image}" alt="${favedKit.name}">
-            </td>
-            <td>${favedKit.name}</td>
-            <td>$${parseInt(favedKit.price)}</td>
-            <td class="item-qty">
-                <button class="decrement-btn">-</button>
-                <span>1</span>
-                <button class="increment-btn">+</button>
-            </td>
-            <td class="item-totPrice">$${parseInt(favedKit.price)}</td>
-        </tr>`
-    }
     console.log("add to cart")
-    cartItems.push({ id: i, name: favedKit.name, img: favedKit.image, price: parseInt(favedKit.price), quantity: 1 })
+    cartItems.push({ id: favedKit.id, name: favedKit.name, img: favedKit.image, price: parseInt(favedKit.price), quantity: 1 })
     console.log(cartItems)
     localStorage.setItem("cartItems", JSON.stringify(cartItems))
-    qtySpanHandler()
+    if (cartItems.length === 1) {
+        document.querySelector('table').innerHTML = `<thead>
+                <th>product image</th>
+                <th>name</th>
+                <th>unit price</th>
+                <th>quantity</th>
+                <th>total price</th>
+            </thead>
+            <tbody>
+                <tr data-key="${favedKit.id}" class="cart-item-row">
+                             <td class="item-img">
+                            <button class="del-btn"><i class="fa-solid fa-trash-can"></i></button>
+                                <img src="${favedKit.image}" alt="${favedKit.name}">
+                           </td>
+                             <td>${favedKit.name}</td>
+                            <td>$${parseInt(favedKit.price)}</td>
+                            <td class="item-qty">
+                                <button data-key="${favedKit.id}" class="decrement-btn">-</button>
+                               <span>${1}</span>
+                             <button data-key="${favedKit.id}" class="increment-btn">+</button>
+                            </td>
+                            <td class="item-totPrice">$${parseInt(favedKit.price)}</td>
+                       </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan=4>total</td>
+                    <td id="totalVal"></td>
+                </tr>
+
+            </tfoot>`
+    }
     drawTable()
-    removeItem(id, i)
+    qtySpanHandler()
+    removeItem(id)
 }

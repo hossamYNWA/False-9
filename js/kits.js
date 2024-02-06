@@ -149,6 +149,10 @@ searchField.addEventListener("keyup", () => {
 const favBtns = document.querySelectorAll("button[name='favBtn']")
 let favs = JSON.parse(localStorage.getItem("favs")) || [];
 favBtns.forEach((btn, i) => btn.addEventListener("click", () => {
+    if (!JSON.parse(localStorage.getItem("loggedIn"))) {
+        location.href = 'login.html'
+        return false;
+    }
     const favedKit = { ...allKits[i], id: i, faved: true }
     cartItems = JSON.parse(localStorage.getItem("cartItems")) || []
     if (checkInArray(i, "cartItems")) {
@@ -156,7 +160,7 @@ favBtns.forEach((btn, i) => btn.addEventListener("click", () => {
         return false;
     }
     else {
-        if (btn.innerHTML === '<i class="fa-regular fa-heart"></i>') {
+        if (btn.children[0].classList.contains("fa-regular")) {
             btn.innerHTML = '<i class="fas fa-heart faved"></i>'
             if (!allKits[i].faved) {
                 allKits[i].faved = true
@@ -173,4 +177,9 @@ favBtns.forEach((btn, i) => btn.addEventListener("click", () => {
 
 }))
 
-
+const cardsNames = document.querySelectorAll(".product-name")
+cardsNames.forEach(card => {
+    if (card.textContent.length > 16) {
+        card.style.fontSize = "14px"
+    }
+})
