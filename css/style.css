@@ -595,6 +595,10 @@ footer .insta:hover {
         display: none;
     }
 
+    .carousel-overlay-content .img-cont img {
+        height: 55%;
+    }
+
     .carousel-item img {
         object-fit: contain;
     }
