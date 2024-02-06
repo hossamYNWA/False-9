@@ -1,0 +1,13 @@
+body > main{
+  padding-top: 80px;
+  line-height: 23px;
+  font-size: 0.9rem;
+    margin: 50px;
+}
+
+body > main> h1 {
+  margin: 20px auto;
+}
+body > main> h3 {
+  margin: 10px auto;
+}
