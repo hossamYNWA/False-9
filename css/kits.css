@@ -1,0 +1,115 @@
+:root {
+    --primary-color: #423d3d;
+    --secondary-color: #f0f0f0;
+    --tertiary-color: #409df0;
+}
+
+main {
+    padding-top: 60px;
+    min-height: 576px;
+    ;
+}
+
+#search-container {
+    text-align: center;
+    margin: 30px auto;
+    width: 400px;
+    position: relative;
+}
+
+#search-input {
+    padding: 15px;
+    width: 340px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: 0;
+    height: 050px;
+    color: var(--primary-color)
+}
+
+#search-container i {
+    position: absolute;
+    right: 45px;
+    color: var(--primary-color);
+    top: 13px;
+    font-size: 23px;
+}
+
+#search-input:focus {
+    border: 1px solid var(--tertiary-color);
+}
+
+#search-input:focus+i {
+    color: var(--tertiary-color);
+}
+
+/* styling product card */
+
+main .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+    width: 100%;
+}
+
+main .container .product-card {
+    border: 1px solid #ddd;
+    margin: 20px;
+    padding: 10px;
+    background-color: white;
+    text-align: center;
+    width: 225px;
+    height: 310px;
+    color: var(--primary-color);
+    border-radius: 5px
+}
+
+main .container .product-card:hover>img {
+    transform: scale(1.1)
+}
+
+main .container .product-card .product-image {
+    max-height: 188px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+    transition: 0.6s;
+}
+
+main .container .product-card .product-name {
+    font-size: 18px;
+    margin: 10px 0;
+    text-transform: capitalize;
+}
+
+main .container .product-card .product-price {
+    font-size: 14px;
+    color: #555;
+    font-weight: bold
+}
+
+main .container .product-card .btn {
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 8px;
+    margin: 5px auto;
+    border: 0px;
+    background-color: transparent;
+}
+
+main .container .product-card .btn:hover {
+    background-color: #f8f8f8;
+}
+
+main .container .product-card .btn i {
+    font-size: 1.1rem;
+    color: var(--primary-color)
+}
+
+main .container .product-card .btn:active {
+    transform: scale(0.9)
+}
+
+i.faved {
+    color: #d53c3c !important;
+}

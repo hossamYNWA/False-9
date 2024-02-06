@@ -1,0 +1,158 @@
+:root {
+    --primary-color: #423d3d;
+    --secondary-color: #f0f0f0;
+    --tertiary-color: #409df0;
+}
+
+main {
+    padding-top: 60px;
+    text-align: center;
+    min-height: 576px;
+}
+
+.cart-header {
+
+    font-size: 2.5rem;
+    margin: 35px auto;
+}
+
+table.cart-container {
+    border-collapse: collapse;
+    min-width: 640px;
+    margin: 20px auto;
+}
+
+table thead {
+    background-color: var(--tertiary-color);
+    color: var(--secondary-color);
+}
+
+td.item-img {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+td.item-img .del-btn {
+    border: 0;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    opacity: 0.8
+}
+
+td>img {
+    width: 50%;
+}
+
+.cart-container th {
+    width: 110px;
+    height: 45px;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #ccc;
+}
+
+table tbody tr td {
+    padding: 20px 0px 0px 0px;
+    color: var(--primary-color)
+}
+
+table tbody button {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 20%;
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+tbody .item-qty span {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+tfoot tr td {
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--tertiary-color)
+}
+
+.favs {
+    position: relative;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.favs .product-card {
+    background-color: #fff;
+    height: 210px;
+    min-width: 150px;
+    overflow: hidden;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+    margin: 5px 15px;
+}
+
+.favs .product-image {
+    height: 60%;
+}
+
+.favs .product-name {
+    text-transform: capitalize;
+    height: 10%;
+    font-size: 0.8rem;
+}
+
+.favs .product-price {
+    margin: 5px;
+    height: 10%;
+}
+
+.favs .product-card button {
+    display: inline-block;
+    height: 10%;
+    border: 0;
+    background: transparent;
+    font-size: 18px;
+    margin: 0 7px;
+}
+
+
+.favs-container {
+    display: flex;
+    min-width: 150%;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    transition: transform ease 0.6s
+}
+
+.favs>button {
+    height: 50px;
+    width: 50px;
+    font-size: 30px;
+    border: 1px solid var(--primary-color);
+    position: absolute;
+    bottom: 50%;
+    transform: translateY(50%);
+    background: transparent;
+    border-radius: 50%;
+    text-align: center;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.favs .product-card i {
+    color: var(--primary-color);
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+footer {
+    margin-top: 30px;
+}
